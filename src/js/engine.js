@@ -1,4 +1,4 @@
-import filmCard from '../templates/filmCardFireBase.hbs';
+import cardFilm from '../templates/filmCardTemplate.hbs';
 const refs = {
   btnMyLibrary: document.querySelector('.js-library'),
   addWatchedBtn: document.querySelector('[data-action="watched"]'),
@@ -60,27 +60,8 @@ refs.queueBtn.addEventListener('click', () => {
     });
 });
 //// my  works
-
 const renderWatched = doc => {
-  const li = filmCard;
-  // `
-  // <li class="gallery-item-card" data-id="${doc.data().id}">
-  //   <div class="poster-container">
-  //     <img
-  //       class="poster"
-  //       src="${doc.data().poster_path}"
-  //       data-source="https://image.tmdb.org/t/p/w500%7B%7Bbackdrop_path%7D%7D"
-  //       alt="Poster-film"
-  //     />
-  //   </div>
-  //   <div class="text-container">
-  //     <h2 class="text-title">${doc.data().title}</h2>
-  //     <div class="text-details">
-  //       <p class="text-ganre">${doc.data().genre_ids} | ${doc.data().release_date}</p>
-  //       <p class="text-rating">${doc.data().vote_average}</p>
-  //     </div>
-  //   </div>
-  // </li>
-  // `;
+  console.log(doc.data());
+  const li = cardFilm(doc.data());
   refs.containerMyLibrary.insertAdjacentHTML('beforeend', li);
 };

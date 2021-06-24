@@ -44,13 +44,16 @@ export default class MovieSearch {
     });
   }
 
+  // fetchGenresMovie() {
+  //   return fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`)
+  //     .then(response => response.json())
+  //     .then(({ genres }) => genres);
+  // }
   fetchGenresMovie() {
     return fetch(
       `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`,
     ).then(response => {
       if (response.ok) {
-        // console.log(page);
-        // this.page += 1;
         return response.json();
       }
       throw new Error('Error fetching data');
