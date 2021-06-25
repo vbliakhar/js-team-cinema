@@ -1,56 +1,66 @@
-import cardFilm from '../templates/filmCardTemplate.hbs';
-const refs = {
-  btnMyLibrary: document.querySelector('.js-library'),
-  addWatchedBtn: document.querySelector('[data-action="watched"]'),
-  addQueueBtn: document.querySelector('[data-action="queue"]'),
-  watchedBtn: document.querySelector('[data-action="watchedBtn"]'),
-  queueBtn: document.querySelector('[data-action="queueBtn"]'),
-  headerButtons: document.querySelector('.header-button-list'),
-  containerMyLibrary: document.querySelector('.gallery'),
+import filmCard from '../templates/filmCardFirebase.hbs';
+import getRefs from './getRefs';
+// export default function getRefs() {
+//   return {
+//     email: document.getElementById('email'),
+//     password: document.getElementById('password'),
+//     btnRegisterIn: document.querySelector('[data-action="registerIn"]'),
+//     btnRegisterUp: document.querySelector('[data-action="registerUp"]'),
+//     modalBtn: document.querySelector('[data-action="Sind-In"]'),
+//     modalSingIn: document.querySelector('.formRegistr'),
+
+//     btnWatched: document.querySelector('[data-action="add-to-watched"]'),
+//     btnQueue: document.querySelector('[data-action="add-to-queue"]'),
+//     btnMyLibrary: document.querySelector('.js-library'),
+//     containerWatchedFilms: document.querySelector('.gallery'),
+//     watched: document.querySelector('#Watched'),
+//     queue: document.querySelector('#que'),
+
+//     header: document.querySelector('.page-header'),
+//     scrollToTop: document.querySelector('#scrollTop'),
+//     filmGallery: document.querySelector('.gallery'),
+//     searchFilm: document.querySelector('.form-container'),
+//   };
+// }
+const refs = getRefs();
+let checkID = null;
+//create element and render library 'watched' films
+
+const onWatchedLibraryClick = evt => {
+  if (evt.target.classList.contains('js-watched-btn')) {
+    renderWatchedBtn();
+  }
 };
-//our ref
+
+addEventListener('click', onWatchedLibraryClick);
+
+const onQueueLibraryClick = evt => {
+  if (evt.target.classList.contains('js-watched-que')) {
+    renderQueueBtn();
+  }
+};
+
+addEventListener('click', onQueueLibraryClick);
+
 refs.btnMyLibrary.addEventListener('click', () => {
-  refs.headerButtons.style.display = 'flex';
-  refs.containerMyLibrary.innerHTML = '';
+  refs.containerWatchedFilms.innerHTML = ' ';
 });
-refs.addWatchedBtn.addEventListener('click', () => {
-  console.log('add Watched');
-});
-refs.addQueueBtn.addEventListener('click', () => {
-  console.log('add Queue');
-});
-refs.watchedBtn.addEventListener('click', () => {
-  console.log('watchedBtn');
-  refs.containerMyLibrary.innerHTML = '';
-  // db.collection('queue').add({
-  //   id: '123456',
-  //   poster_path: 'https://image.tmdb.org/t/p/w500/lPsD10PP4rgUGiGR4CCXA6iY0QQ.jpg',
-  //   backdrop_path: 'my films',
-  //   title: 'new film in VS',
-  //   genre_ids: '1111',
-  //   release_date: '999',
-  //   vote_average: '999',
-  // });
+
+function renderWatchedBtn() {
+  refs.containerWatchedFilms.innerHTML = ' ';
   db.collection('watched')
     .get()
     .then(querySnapshot => {
       querySnapshot.forEach(doc => {
+        checkID = doc.data().id;
+        console.log(checkID);
         renderWatched(doc);
       });
     });
-});
-refs.queueBtn.addEventListener('click', () => {
-  console.log('queueBtn');
-  refs.containerMyLibrary.innerHTML = '';
-  // db.collection('queue').add({
-  //   id: '123456',
-  //   poster_path: 'https://image.tmdb.org/t/p/w500/lPsD10PP4rgUGiGR4CCXA6iY0QQ.jpg',
-  //   backdrop_path: 'my films',
-  //   title: 'new film in VS',
-  //   genre_ids: '1111',
-  //   release_date: '999',
-  //   vote_average: '999',
-  // });
+}
+
+function renderQueueBtn() {
+  refs.containerWatchedFilms.innerHTML = ' ';
   db.collection('queue')
     .get()
     .then(querySnapshot => {
@@ -58,10 +68,9 @@ refs.queueBtn.addEventListener('click', () => {
         renderWatched(doc);
       });
     });
-});
-//// my  works
+}
+
 const renderWatched = doc => {
-  console.log(doc.data());
-  const li = cardFilm(doc.data());
-  refs.containerMyLibrary.insertAdjacentHTML('beforeend', li);
+  const li = filmCard(doc.data());
+  refs.containerWatchedFilms.insertAdjacentHTML('beforeend', li);
 };

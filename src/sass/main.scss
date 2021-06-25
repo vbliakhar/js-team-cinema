@@ -8,6 +8,7 @@
 @import './utils/visually-hidden';
 @import './utils/mixins';
 @import './components/reused';
+@import './components/spinner';
 
 @import './components/header';
 @import './components/gallerry';
@@ -15,6 +16,7 @@
 @import './components/footer';
 
 @import './components/modal';
-@import './components/modalRegist';
+// @import './components/modalRegist';
 @import './components/container';
-
+@import './components/theme';
+@import './components/to-top';

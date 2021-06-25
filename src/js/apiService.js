@@ -31,7 +31,7 @@ export default class MovieSearch {
     });
   }
 
-  fetchDetailsMovie() {
+  fetchDetailsMovie(movie_id) {
     return fetch(
       `https://api.themoviedb.org/3/movie/${movie_id}?api_key=${API_KEY}&language=en-US`,
     ).then(response => {
@@ -44,20 +44,10 @@ export default class MovieSearch {
     });
   }
 
-  // fetchGenresMovie() {
-  //   return fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`)
-  //     .then(response => response.json())
-  //     .then(({ genres }) => genres);
-  // }
   fetchGenresMovie() {
-    return fetch(
-      `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`,
-    ).then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error('Error fetching data');
-    });
+    return fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`)
+      .then(response => response.json())
+      .then(({ genres }) => genres);
   }
 
   resetPage() {
